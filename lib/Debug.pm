@@ -1,11 +1,4 @@
 #! /usr/bin/perl
-#      $URL: https://subversion.assembla.com/svn/pvm/trunk/pvm/lib/Debug.pm $
-# $Revision: 74 $
-#     $Date: 2011-11-12 12:19:20 +0000 (Sat, 12 Nov 2011) $
-#   $Author: lqueryvg $
-#
-# Copyright 2011 by John Buxton, HCT Solutions Ltd, UK, All rights reserved.
-# See LICENSE.txt distributed with this software for license and warranty info.
 
 
 use warnings;

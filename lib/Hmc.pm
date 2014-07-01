@@ -1,11 +1,4 @@
 #! /usr/bin/perl
-#      $URL: https://subversion.assembla.com/svn/pvm/trunk/lib/HmcCommand.pm $
-#     $Date: $
-#   $Author: $
-# $Revision: -1 $
-#
-# Copyright 2011 by John Buxton, HCT Solutions Ltd, UK, All rights reserved.
-# See LICENSE.txt distributed with this software for license and warranty info.
 
 
 

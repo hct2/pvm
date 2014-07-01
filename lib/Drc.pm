@@ -1,11 +1,4 @@
 #! /usr/bin/perl
-#      $URL: https://subversion.assembla.com/svn/pvm/trunk/lib/HMC.pm $
-#     $Date: 2011-05-23 13:50:17 +0100 (Mon, 23 May 2011) $
-#   $Author: lqueryvg $
-# $Revision: 30 $
-#
-# Copyright 2011 by John Buxton, HCT Solutions Ltd, UK, All rights reserved.
-# See LICENSE.txt distributed with this software for license and warranty info.
 
 
 use warnings;

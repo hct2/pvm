@@ -1,10 +1,4 @@
 #! /usr/bin/perl
-#      $URL: https://subversion.assembla.com/svn/pvm/trunk/lib/HmcCommandRunner.pm $
-#     $Date: 2011-05-26 11:38:24 +0100 (Thu, 26 May 2011) $
-#   $Author: lqueryvg $
-# $Revision: 39 $
-# See LICENSE.txt distributed with this software for license and warranty info.
-
 
 =head1 NAME
 

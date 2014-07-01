@@ -1,11 +1,4 @@
 #!/usr/bin/perl
-#      $URL: https://subversion.assembla.com/svn/pvm/trunk/pvm/lib/Tab.pm $
-# $Revision: 67 $
-#     $Date: 2011-09-19 17:38:11 +0100 (Mon, 19 Sep 2011) $
-#   $Author: lqueryvg $
-#
-# Copyright 2011 by John Buxton, HCT Solutions Ltd, UK, All rights reserved.
-# See LICENSE.txt distributed with this software for license and warranty info.
 
 
 
