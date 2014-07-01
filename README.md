@@ -4,7 +4,7 @@
 
 Pvm is a command line utility which lists various information from one or
 more PowerVM (pSeries AIX/Linux) systems.  It is essentially a more user
-friendly front end to the lssyscfg and lshwres HMC commands.
+friendly front end to the `lssyscfg` and `lshwres` HMC commands.
 
 Pvm can be used to easily review and compare the state of various
 attributes of your systems.  This makes easy to spot anomalies, for
@@ -69,26 +69,26 @@ Run `pvm query` to see a list of available commands.
 
 Some example commands to get you started:
 
-  pvm query lpar list                 # list lpars
-  pvm query lpar list -?              # show options for command 
-  pvm query lpar list format=detail   # one attribute per line
-  pvm query profile cpu               # profile cpu attributes
-  pvm query profile                   # list all query profile commands
-  pvm query lpar virtual ethernet     # lpar (active) virtual ethernet
-  query lpar virtual fc               # lpar (active) virtual fc adapters
-  query lpar virtual wwpns            # lpar (active) virtual fc wwpns
+    pvm query lpar list                 # list lpars
+    pvm query lpar list -?              # show options for command 
+    pvm query lpar list format=detail   # one attribute per line
+    pvm query profile cpu               # profile cpu attributes
+    pvm query profile                   # list all query profile commands
+    pvm query lpar virtual ethernet     # lpar (active) virtual ethernet
+    pvm query lpar virtual fc               # lpar (active) virtual fc adapters
+    pvm query lpar virtual wwpns            # lpar (active) virtual fc wwpns
 
 Note that each of the above commands can be abbreviated to the
 following (respectively):
 
-  pvm q l l                 
-  pvm q l l -?
-  pvm q l l f=d
-  pvm q p c  
-  pvm q p
-  pvm q l v e 
-  pvm q l v f 
-  pvm q l v w 
+    pvm q l l                 
+    pvm q l l -?
+    pvm q l l f=d
+    pvm q p c  
+    pvm q p
+    pvm q l v e 
+    pvm q l v f 
+    pvm q l v w 
 
 ## Known Bugs & Issues
 
@@ -110,6 +110,6 @@ to an active configuration, or vice-versa.
 
 ## Contact Details
 
-John Buxton
-HCT Solutions Ltd
+John Buxton,
+HCT Solutions Ltd,
 john.buxton2@gmail.com
