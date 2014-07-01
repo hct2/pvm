@@ -1,0 +1,243 @@
+#!/usr/bin/perl
+#      $URL: https://subversion.assembla.com/svn/pvm/trunk/pvm/bin/pvm $
+#     $Date: 2011-11-12 12:19:20 +0000 (Sat, 12 Nov 2011) $
+#   $Author: lqueryvg $
+# $Revision: 74 $
+#
+# Copyright 2011 by John Buxton, HCT Solutions Ltd - UK, All rights reserved.
+# See LICENSE.txt distributed with this software for license and warranty info.
+
+
+
+use warnings;
+use strict;
+
+package main;
+use FindBin qw($Bin);
+use lib "$Bin/../lib";
+
+use Cli;
+use Pvm;
+use Pcmd;
+use Drc;
+use Debug 'debug';
+use Hmc;
+use Msys;
+
+my $long_stanza_report;
+my $object_pattern;
+
+#-------------------------------------------------------------------------
+sub _is_msys_required {
+    my ($command_conf) = @_;
+    my $cmd = $command_conf->{cmd};
+    return ($cmd =~ /%MSYS/xms);
+}
+#-------------------------------------------------------------------------
+
+=head1 _all_managed_systems_report($command_conf)
+Adds lines to the report for the specified $command_conf for every hmc
+and managed system. It is expected that the report has already been initialised.
+
+=cut
+
+sub _all_managed_systems_report {
+    debug('called') if (Debug::level() > 1);
+
+    #print "$object_pattern\n";
+    my (%args)        = @_;
+    my ($command_conf, $sub_attribute, $hmc_query_string) =
+        @args{qw/command_conf sub_attribute hmc_query_string/};
+
+    if (!defined($command_conf)) {
+        Carp::confess 'expect command_conf parameter';
+    }
+
+    my $msys_required = _is_msys_required($command_conf);
+    debug("msys_required = $msys_required") if (Debug::level() > 1);
+
+    my ($cache_filename, $cmd, $key) =
+      @{$command_conf}{qw/cache_filename cmd key/};
+
+    # for each hmc...
+    HMC:
+    for my $hmc (Pvm::get_hmcs($hmc_query_string)) {
+
+        debug('hmc = ' . $hmc->get_name()) if (Debug::level() > 1);
+
+        my @managed_systems = (undef);
+        if ($msys_required) {
+            @managed_systems = $hmc->get_msys_list();
+        }
+
+        # for each managed system...
+        MSYS:
+        foreach my $msys (@managed_systems) {
+
+            my ($custom_fields_aref, $msys_path);
+            my $msys_name;
+
+            if ($msys_required) {
+                $msys_name = $msys->get_name();
+                debug('msys_name = ' . $msys_name) if (Debug::level() > 1);
+                $cmd = $command_conf->{cmd};
+                $cmd =~ s/%MSYS/$msys_name/gx;
+                $cache_filename = "$msys_name/" . $command_conf->{cache_filename};
+                $custom_fields_aref = [$msys_name];
+                $msys_path = "$msys_name/" . $hmc->get_name();
+            }
+            else {
+                $custom_fields_aref = [$hmc->get_name()];
+                $msys_path = $hmc->get_name();
+            }
+
+            my $attrs = $hmc->get_cmd_data(
+                cache_filename => $cache_filename,
+                cmd            => $cmd,
+                key            => $key,
+            );
+
+            if (defined $sub_attribute) {
+                debug("sub_attribute = $sub_attribute") if (Debug::level() > 1);
+                $attrs = Drc::get_sub_attribute_data($attrs, $sub_attribute);
+                if ($sub_attribute eq 'io_slots') {
+                    Pvm::add_io_slot_descriptions($attrs, $hmc, $msys);
+                }
+            }
+            else {
+                debug("no sub_attribute") if (Debug::level() > 1);
+            }
+
+            if (!defined $key) {
+                debug("no primary key") if (Debug::level() > 1);
+
+                # no primary key, means there's just one line for each msys
+                next MSYS
+                  if (defined $object_pattern
+                    && ($msys_path !~ /$object_pattern/));
+
+                if ($long_stanza_report) {
+                    for my $attr (keys %$attrs) {
+                        print $hmc->get_name()
+                          . " $msys_name $attr = "
+                          . $attrs->{$attr} . "\n";
+                    }
+                }
+                else {
+                    Report::add_line(
+                        custom_fields_aref => $custom_fields_aref,
+                        attrs_href         => $attrs
+                    );
+                }    # if long_stanza_report
+            }
+            else {
+                # there is a key, so we are looking at multiple
+                # objects within the msys
+
+                debug("there is a primary key") if (Debug::level() > 2);
+                OBJECT:
+                for my $object (keys %$attrs) {
+                    my $path = "$object/$msys_path";
+                    debug("path = $path") if  (Debug::level() > 2);;
+
+                    if (defined($object_pattern)) {
+                        if (Debug::level() > 2) {
+                            debug("object_pattern = $object_pattern");
+                        }
+                        next OBJECT if ($path !~ /$object_pattern/);
+                    }
+
+                    if ($long_stanza_report) {
+                        debug("long_stanza_report") if (Debug::level());
+                        my $left_text;
+
+                        if ($msys_required) {
+                            $left_text = $hmc->get_name() . " $msys_name $object";
+                        }
+                        else {
+                            $left_text = $hmc->get_name() . " $object";
+                        }
+                        my $href = $attrs->{$object};
+                        for my $attr (keys %{$href}) {
+                            my $value = $href->{$attr};
+                            print "$left_text $attr = $value\n";
+                        }
+                    }
+                    else {
+                        Report::add_line(
+                            custom_fields_aref => $custom_fields_aref,
+                            attrs_href         => ${$attrs}{$object},
+                        );
+                    }    # if long_stanza_report
+                }    # for each object
+            }    # if there's a key key
+            next HMC if (!$msys_required);
+        }    # foreach managed system
+    }    # foreach hmc
+}
+
+#-------------------------------------------------------------------------
+
+my $attrs = Cli::get_cli_options(Pcmd::get());
+
+if (defined($attrs->{options}{debug})) {
+    Debug::set_level($attrs->{options}{debug});
+}
+
+if (defined($attrs->{options}{cache_flush_level})) {
+    Cache::set_flush_level($attrs->{options}{cache_flush_level});
+}
+
+if (Cli::attr_equals($attrs, "format", "list")) {
+    $long_stanza_report = 1;
+}
+
+if (defined($attrs->{options}{search})) {
+    $object_pattern = $attrs->{options}{search};
+}
+
+my $base_user_command = $attrs->{command};
+debug("base user command = $base_user_command") if (Debug::level());
+
+Pvm::init();
+
+my $ref = Pcmd::get_conf($base_user_command);
+if (!defined $ref || !defined $ref->{command_conf}) {
+    Carp::confess "command '$base_user_command' not configured\n";
+}
+
+if (! defined $ref->{template}) {
+    Carp::confess "no template defined for command \"$base_user_command\"\n";
+}
+
+my $template_string_ref;
+if (!defined($long_stanza_report)) {
+    $template_string_ref = \$ref->{template};
+    debug('not long_stanza_report') if (Debug::level());
+    Report::init_from_template(template_string_ref => $template_string_ref);
+}
+
+if (defined($ref->{abbreviations})) {
+    debug('abbreviations are set') if (Debug::level());
+    Report::set_abbreviations(abbreviations_ref => $ref->{abbreviations});
+}
+
+my $output;
+_all_managed_systems_report(
+    command_conf  => $ref->{command_conf},
+    sub_attribute => $ref->{sub_attribute},
+    hmc_query_string   => $attrs->{options}{hmcs},
+);
+
+$output = ${Report::get_text_ref()};
+if (Cli::attr_equals($attrs, 'headings_help', 'yes')) {
+    if (!defined($long_stanza_report)) {
+        $output =
+          Report::get_headings_help($template_string_ref) . "#\n$output";
+    }
+    else {
+        $output .= "# Warning, headings_help not compatible with list format\n";
+    }
+}
+print $output;
+
