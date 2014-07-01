@@ -19,12 +19,12 @@ example an adapter that shouldn't be "required" or a non-standard VLAN number.
   readable report with aligned columns.
 
 - A "discoverable" CLI.  For example:
-  - "pvm" by itself will be give you a list of all possible commands. 
-  - "pvm query lpar" will give you a list of all "query lpar" commands.
+  - `pvm` by itself will be give you a list of all possible commands. 
+  - `pvm query lpar` will give you a list of all `query lpar` commands.
 
 - A CLI which can be abbreviated (as long as each argument is un-ambiguous).
-  For example, "pvm query lpar virtual fc" can be
-  abbreviated to "pvm q lpar virt fc" or even "pvm q l v f".
+  For example, `pvm query lpar virtual fc` can be
+  abbreviated to `pvm q lpar virt fc` or even `pvm q l v f`.
 
 - No need to install any other Perl modules; Uses only Perl 5.8 Core
   modules supplied with AIX 5.3 and above.
@@ -59,13 +59,13 @@ example an adapter that shouldn't be "required" or a non-standard VLAN number.
    done this at least once before already. Essentially you'll need to create
    a key pair using whatever method you prefer, then use the
    mkauthkeys command on the hmc to add the public key to the HMC.
-   Google for "mkauthkeys" and you'll find plenty of examples of how to do this.
+   Google for `mkauthkeys` and you'll find plenty of examples of how to do this.
 
 ## Usage
 
-Run "pvm -?" for usage help.
-Run "pvm" to see a list of available commands.
-Run "pvm query" to see a list of available commands.
+Run `pvm -?` for usage help.
+Run `pvm` to see a list of available commands.
+Run `pvm query` to see a list of available commands.
 
 Some example commands to get you started:
 
@@ -100,7 +100,7 @@ following (respectively):
 ## Future Plans
 
 In it's current form, Pvm is just a reporting tool - it makes no changes
-to managed systems (i.e. it doesn't invoke chsyscfg or chhwres), but
+to managed systems (i.e. it doesn't invoke `chsyscfg` or `chhwres`), but
 with a little (or a lot) more development it could be much more.
 
 For example, it could be used to compare two profiles, or a profile
