@@ -36,18 +36,18 @@ example an adapter that shouldn't be "required" or a non-standard VLAN number.
 
 ## Installation
 
-1. Extract pvm.tar somewhere.
+1. Extract `pvm.tar` somewhere.
    Anywhere. (You don't have to run pvm as root.)
 
-2. Add the pvm/bin directory (which contains the pvm command) to your PATH.
+2. Add the `pvm/bin` directory (which contains the pvm command) to your PATH.
    Not compulsory, but saves you typing the full path every time.
 
-3. Edit pvm/lib/pvm.conf or make a copy of it in your home directory.
-   Set the hmc_names to the list of HMCs you want to query.
+3. Edit `pvm/lib/pvm.conf` or make a copy of it in your home directory.
+   Set the `hmc_names` to the list of HMCs you want to query.
    Pvm will discover all managed systems on the listed HMCs, when you
    run you're first query.
-   Set the hmc_user if you want pvm to run commands on the HMCs as someone
-   other than hscroot.
+   Set the `hmc_user` if you want `pvm` to run commands on the HMCs as someone
+   other than `hscroot`.
 
 4. Setup ssh keys to allow your user (the user running pvm) to be
    able to ssh directly to the HMCs without a password.
@@ -58,7 +58,7 @@ example an adapter that shouldn't be "required" or a non-standard VLAN number.
    I would expect most self-respecting PowerVM administrators to have already
    done this at least once before already. Essentially you'll need to create
    a key pair using whatever method you prefer, then use the
-   mkauthkeys command on the hmc to add the public key to the HMC.
+   `mkauthkeys` command on the hmc to add the public key to the HMC.
    Google for `mkauthkeys` and you'll find plenty of examples of how to do this.
 
 ## Usage
@@ -106,7 +106,6 @@ with a little (or a lot) more development it could be much more.
 For example, it could be used to compare two profiles, or a profile
 with an active lpar configuration. It could apply changes from a profile
 to an active configuration, or vice-versa.
-
 
 ## Contact Details
 
