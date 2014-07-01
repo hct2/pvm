@@ -1,7 +1,6 @@
-Pvm (PowerVM reporting tool)
+# Pvm (PowerVM reporting tool)
 
-Introduction
-------------
+## Introduction
 
 Pvm is a command line utility which lists various information from one or
 more PowerVM (pSeries AIX/Linux) systems.  It is essentially a more user
@@ -12,8 +11,7 @@ attributes of your systems.  This makes easy to spot anomalies, for
 example an adapter that shouldn't be "required" or a non-standard VLAN number.
 
 
-Features
---------
+## Features
 
 - Query managed systems, lpars and their profiles.
 
@@ -36,8 +34,7 @@ Features
   wait for the HMC commands again. You can override this behaviour with
   a command line option.
 
-Installation
-------------
+## Installation
 
 1. Extract pvm.tar somewhere.
    Anywhere. (You don't have to run pvm as root.)
@@ -64,8 +61,7 @@ Installation
    mkauthkeys command on the hmc to add the public key to the HMC.
    Google for "mkauthkeys" and you'll find plenty of examples of how to do this.
 
-Usage
------
+## Usage
 
 Run "pvm -?" for usage help.
 Run "pvm" to see a list of available commands.
@@ -94,15 +90,14 @@ following (respectively):
   pvm q l v f 
   pvm q l v w 
 
-Known Bugs & Issues
--------------------
+## Known Bugs & Issues
+
 - Not all attributes are listed. The various reports have to be specifically
   configured, so if there are important reports/attributes which you
   feel should be included, please let me know.
 - Don't trust the comments in the scripts. They need an overhall ;-)
 
-Future Plans and License
-------------------------
+## Future Plans
 
 In it's current form, Pvm is just a reporting tool - it makes no changes
 to managed systems (i.e. it doesn't invoke chsyscfg or chhwres), but
@@ -112,23 +107,9 @@ For example, it could be used to compare two profiles, or a profile
 with an active lpar configuration. It could apply changes from a profile
 to an active configuration, or vice-versa.
 
-However before I spend any more time on this I need some feedback.
-Do people think pvm is useful and has a place in the world ? If the
-feedback is positive, I will think about what the future might be and
-put some thought into what type of license it should have. In the meantime
-I have opted for the safe option which is to make the license restrictive:
-evaluation purposes only.
 
-See the LICENSE.txt file distributed with pvm for more information.
+## Contact Details
 
-Revision History
-----------------
-1.0    First Release
-1.0.a  Added option for hmc query string to narrow down hmc query scope.
-
-
-Contact Details
----------------
 John Buxton
 HCT Solutions Ltd
 john.buxton2@gmail.com
