@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-
-
 =head1 NAME
 
 tab - tabulate lines of fields in equal width columns

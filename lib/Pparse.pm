@@ -1,7 +1,5 @@
 #!/bin/perl
 
-
-
 =head1 NAME
 
 pparse - Parse CSV output from lpar commands.

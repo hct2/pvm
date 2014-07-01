@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-
-
 =head1 NAME
 
 Msys - managed system
