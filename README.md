@@ -1,4 +1,4 @@
-# Pvm (PowerVM reporting tool)
+# Pvm - PowerVM reporting tool written in Perl
 
 ## Introduction
 
@@ -10,6 +10,7 @@ Pvm can be used to easily review and compare the state of various
 attributes of your systems.  This makes easy to spot anomalies, for
 example an adapter that shouldn't be "required" or a non-standard VLAN number.
 
+It is written in Perl due to its ubiquity on AIX.
 
 ## Features
 
