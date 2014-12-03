@@ -91,6 +91,154 @@ following (respectively):
     pvm q l v f 
     pvm q l v w 
 
+## Sample Output
+
+### List managed systems
+
+```sh
+$ pvm q s l
+# query system list
+HMC  Msys   Type     Serial   Time                IP
+==== ====== ======== ======== =================== ===============
+hmc2 P750_2 8233-E8B 061235P  05/25/2011 11:47:55 192.165.255.249
+hmc2 P750_1 8233-E8B 061234P  05/25/2011 11:43:39 192.165.254.248
+hmc1 P720_2 8202-E4B ABCD1234 05/25/2011 11:43:27 173.17.255.250
+hmc1 P720_1 8202-E4B ABCD1235 05/25/2011 11:43:28 173.17.254.252
+```
+
+###List LPAR profiles
+
+```sh
+$ pvm q p l
+# query profile list
+Msys   lpar        profile   mem proc vprocs cap   mode
+====== =========== ======= ===== ==== ====== ===== ======
+P720_1 P720_1_VIO1 normal   4096  0.5      2 uncap shared
+P720_1 P720_1_VIO2 normal   4096  0.5      2 uncap shared
+P720_1 lpar1       normal   6144  0.2      2 uncap shared
+P720_1 lpar2       normal   6144  1.0      5 uncap shared
+P720_1 lpar3       normal   6144  1.0      5 uncap shared
+P720_2 P720_2_VIO1 normal   4096  0.5      2 uncap shared
+P720_2 P720_2_VIO2 normal   4096  0.5      2 uncap shared
+P720_2 dbserver1   normal   6144  0.2      2 uncap shared
+P720_2 tsm1        normal   6144  0.2      2 uncap shared
+P720_2 webserver1  normal   6144  1.0      5 uncap shared
+P750_1 P750_1_VIO1 normal   6144  1.0      3 uncap shared
+P750_1 P750_1_VIO2 normal   6144  1.0      3 uncap shared
+P750_1 devserv1    normal   4096  0.5      2 uncap shared
+P750_1 devtsm1     normal  16384  3.0      6 uncap shared
+P750_1 nim1        normal   4096  2.0      3 uncap shared
+P750_1 tsm2        normal  16384  1.5      6 uncap shared
+P750_2 P750_2_VIO1 normal   4096  1.5      3 uncap shared
+P750_2 P750_2_VIO2 normal   4096  1.5      3 uncap shared
+P750_2 server1     normal  16384  1.0      5 uncap shared
+P750_2 server2     normal   4096  0.4      3 uncap shared
+P750_2 server3     normal   4096  0.4      3 uncap shared
+```
+
+### List LPAR profile CPU detail
+
+```sh
+$ pvm q p cp
+# query profile cpu
+Msys   lpar        profile mnU dsU mxU mnP dsP mxP Smode Wgt Po
+====== =========== ======= === === === === === === ===== === ==
+P720_1 P720_1_VIO1 normal  0.1 0.5 2.0   1   2   4 uncap 255 0
+P720_1 P720_1_VIO2 normal  0.1 0.5 2.0   1   2   4 uncap 255 0
+P720_1 lpar1       normal  0.2 0.2 0.6   1   2   4 uncap 128 0
+P720_1 lpar2       normal  0.5 1.0 4.0   3   5  10 uncap 128 0
+P720_1 lpar3       normal  0.5 1.0 4.0   3   5  10 uncap 255 0
+P720_2 P720_2_VIO1 normal  0.1 0.5 2.0   1   2   4 uncap 255 0
+P720_2 P720_2_VIO2 normal  0.1 0.5 2.0   1   2   4 uncap 255 0
+P720_2 dbserver1   normal  0.2 0.2 0.6   1   2   4 uncap 128 0
+P720_2 tsm1        normal  0.2 0.2 0.6   1   2   4 uncap 128 0
+P720_2 webserver1  normal  0.5 1.0 4.0   3   5  10 uncap 128 0
+P750_1 P750_1_VIO1 normal  1.0 1.0 3.0   1   3   6 uncap 128 0
+P750_1 P750_1_VIO2 normal  1.0 1.0 3.0   1   3   8 uncap 128 0
+P750_1 devserv1    normal  0.3 0.5 1.5   1   2   4 uncap 128 0
+P750_1 devtsm1     normal  2.0 3.0 6.0   2   6   8 uncap 128 0
+P750_1 nim1        normal  1.0 2.0 6.0   1   3   6 uncap 128 0
+P750_1 tsm2        normal  0.7 1.5 5.0   2   6   8 uncap 128 0
+P750_2 P750_2_VIO1 normal  1.0 1.5 2.0   2   3   8 uncap 128 0
+P750_2 P750_2_VIO2 normal  1.0 1.5 2.0   2   3   8 uncap 128 0
+P750_2 server1     normal  0.5 1.0 4.0   3   5  10 uncap 128 0
+P750_2 server2     normal  0.3 0.4 1.2   2   3   5 uncap 128 0
+P750_2 server3     normal  0.3 0.4 1.2   2   3   5 uncap 128 0
+```
+### Query active LPAR virtual FC connections
+
+```sh
+$ pvm q l v f
+# query lpar virtual fc
+Msys   lpar    Slot Type   Rlpar  Rslot Rq St
+====== ======= ==== ====== ====== ===== == ==
+P570_1 prod01     8 client ios3a     15 0  1
+P570_1 prod01     9 client ios3b     15 0  1
+P570_1 prod01    10 client ios3a     16 0  1
+P570_1 prod01    11 client ios3b     16 0  1
+P570_1 ios3a     15 server prod01     8 0  1
+P570_1 ios3a     16 server prod01    10 0  1
+P570_1 ios3b     15 server prod01     9 0  1
+P570_1 ios3b     16 server prod01    11 0  1
+```
+
+### List all possible commands
+
+```sh
+$ pvm
+Possible commands:
+  query io bus
+  query io unit
+  query lpar cpu
+  query lpar io
+  query lpar list
+  query lpar memory
+  query lpar serial
+  query lpar virtual ethernet
+  query lpar virtual fc
+  query lpar virtual scsi
+  query lpar virtual wwpns
+  query profile cpu
+  query profile io
+  query profile list
+  query profile memory
+  query profile serial
+  query profile virtual ethernet
+  query profile virtual fc
+  query profile virtual scsi
+  query profile virtual wwpns
+  query reference_codes
+  query system cpu
+  query system hea logical port
+  query system hea logical sys
+  query system hea phys phys
+  query system hea phys port group
+  query system hea phys port list
+  query system list
+  query system memory
+  query system pool
+  query system virtual ethernet
+  query system virtual fc
+  query virtual io
+  query virtual max
+```  
+
+### List possible "query profile" commands
+
+```sh
+$ pvm q p
+Possible commands:
+  query profile cpu
+  query profile io
+  query profile list
+  query profile memory
+  query profile serial
+  query profile virtual ethernet
+  query profile virtual fc
+  query profile virtual wwpns
+  query profile virtual scsi
+```
+
 ## Known Bugs & Issues
 
 - Not all attributes are listed. The various reports have to be specifically
